@@ -25,7 +25,8 @@ public class JobApplicationService{
     }   
 
     public JobApplication getApplicationById(Long id) {
-        return repository.findById(id).orElse(null);
+        // add validation for non existent id
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Application with id " + id + " not found"));
     }
 
     public void deleteApplication(Long id) {

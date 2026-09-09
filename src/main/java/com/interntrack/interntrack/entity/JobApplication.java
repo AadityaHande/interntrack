@@ -3,12 +3,15 @@ package com.interntrack.interntrack.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import com.interntrack.interntrack.enums.ApplicationStatus;
 
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
+// add validation annotations
 
 @Entity 
 public class JobApplication {
@@ -16,11 +19,17 @@ public class JobApplication {
     @GeneratedValue
     Long id;
 
+    @NotBlank 
     String company;
+
+    @NotBlank
     String role;
     // String status;
     @Enumerated(EnumType.STRING)
+    @NotNull 
     ApplicationStatus status;
+    
+    @NotNull
     LocalDate appliedDate;
     String notes;
 

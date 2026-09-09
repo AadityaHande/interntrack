@@ -3,6 +3,9 @@ package com.interntrack.interntrack.controller;
 import com.interntrack.interntrack.dto.StatsResponse;
 import com.interntrack.interntrack.entity.JobApplication;
 import com.interntrack.interntrack.service.JobApplicationService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class JobApplicationController {
     }
 
     @PostMapping
-    public JobApplication createApplication(@RequestBody JobApplication application) {
+    public JobApplication createApplication(@Valid @RequestBody JobApplication application) {
         return service.saveApplication(application);
     }
 
@@ -37,7 +40,7 @@ public class JobApplicationController {
     }
 
     @PutMapping("/{id}")
-    public JobApplication updateApplication(@PathVariable Long id, @RequestBody JobApplication updatedApplication) {
+    public JobApplication updateApplication(@PathVariable Long id, @Valid @RequestBody JobApplication updatedApplication) {
         return service.updateApplication(id, updatedApplication);
     }
 
