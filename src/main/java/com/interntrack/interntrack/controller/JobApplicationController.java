@@ -3,13 +3,13 @@ package com.interntrack.interntrack.controller;
 import com.interntrack.interntrack.dto.StatsResponse;
 import com.interntrack.interntrack.entity.JobApplication;
 import com.interntrack.interntrack.service.JobApplicationService;
+import com.interntrack.interntrack.enums.ApplicationStatus;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
-import com.interntrack.interntrack.enums.ApplicationStatus;
 
 @RestController 
 @RequestMapping ("/applications")
@@ -63,5 +63,10 @@ public class JobApplicationController {
     @GetMapping ("/stats")
     public StatsResponse getStats() {
         return service.getApplicationStats();
+    }
+
+    @GetMapping ("/search")
+    public List<JobApplication> searchByCompany(@RequestParam String company) {
+        return service.searchByCompany(company);
     }
 }

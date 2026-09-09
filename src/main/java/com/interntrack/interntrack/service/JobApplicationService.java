@@ -24,6 +24,9 @@ public class JobApplicationService{
         return repository.findAll();
     }   
 
+    public List<JobApplication> searchByCompany(String company) {
+        return repository.findByCompanyContainingIgnoreCase(company);
+    }
     public JobApplication getApplicationById(Long id) {
         // add validation for non existent id
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Application with id " + id + " not found"));
