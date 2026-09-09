@@ -28,10 +28,12 @@ public class JobApplication {
     @Enumerated(EnumType.STRING)
     @NotNull 
     ApplicationStatus status;
-    
+
     @NotNull
     LocalDate appliedDate;
     String notes;
+
+    String resumeKey;
 
     public JobApplication() {
 
@@ -83,6 +85,14 @@ public class JobApplication {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getResumeKey() {
+        return resumeKey;
+    }
+
+    public void setResumeKey(String resumeKey) {
+        this.resumeKey = resumeKey;
     }
     
     

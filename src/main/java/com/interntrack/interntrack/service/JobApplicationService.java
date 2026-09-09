@@ -4,16 +4,21 @@ import com.interntrack.interntrack.entity.JobApplication;
 import com.interntrack.interntrack.enums.ApplicationStatus;
 import com.interntrack.interntrack.repository.JobApplicationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.interntrack.interntrack.dto.StatsResponse;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service 
 public class JobApplicationService{
     private final JobApplicationRepository repository;
+    private final S3Service s3Service;
 
-    public JobApplicationService(JobApplicationRepository repository) {
+    public JobApplicationService(JobApplicationRepository repository , S3Service s3Service) {
         this.repository = repository;
+        this.s3Service = s3Service;
     }
 
     public JobApplication saveApplication(JobApplication application) {
@@ -71,5 +76,15 @@ public class JobApplicationService{
         long rejected = getApplicationsByStatusCount(ApplicationStatus.REJECTED);
 
         return new StatsResponse(total, applied, onlineAssessment, interview, offer, rejected);
+    }
+
+    public JobApplication uploadResume(
+        Long applicationId,
+        MultipartFile file) throws IOException {
+        JobApplication application = repository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException( "Application with id " + applicationId + " not found"));
+        String key = s3Service.uploadFile(applicationId, file);
+        application.setResumeKey(key);
+        return repository.save(application);
     }
 }
